@@ -7,17 +7,17 @@ import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @SpringBatchTest
+@Import(TestcontainersConfiguration.class)
 @TestPropertySource(
 		properties = { "spring.batch.job.name=BankAccountStage", "input.file.path=classpath:test-data.csv" })
-@Sql(scripts = { "/db/migration/V001__initial_schema.sql", "/db/migration/V002__initial_data.sql" })
 class BankAccountStageBatchIntegrationTest {
 
 	@Autowired
@@ -28,6 +28,11 @@ class BankAccountStageBatchIntegrationTest {
 
 	@Test
 	void testBankAccountStageJob() throws Exception {
+		// データベースをクリーンアップ
+		jdbcTemplate.execute("DELETE FROM stage_transitions");
+		jdbcTemplate.execute("DELETE FROM condition_evaluation_results");
+		jdbcTemplate.execute("DELETE FROM customer_stage_calculations");
+
 		// When
 		JobExecution jobExecution = jobLauncherTestUtils.launchJob();
 

@@ -1,12 +1,12 @@
 package com.example.bank.repository;
 
+import com.example.bank.TestcontainersConfiguration;
 import com.example.bank.job.ProcessResult;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,8 +16,7 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JdbcTest
-@Import(CustomerStageCalculationRepository.class)
-@Sql(scripts = { "/db/migration/V001__initial_schema.sql", "/db/migration/V002__initial_data.sql" })
+@Import({ CustomerStageCalculationRepository.class, TestcontainersConfiguration.class })
 class CustomerStageCalculationRepositoryTest {
 
 	@Autowired

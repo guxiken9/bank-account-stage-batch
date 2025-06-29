@@ -26,7 +26,7 @@ public class ConditionEvaluationResultRepository {
 				)
 				SELECT ?, c.id, ?, ?
 				FROM conditions c
-				WHERE c.condition_type = ?
+				WHERE c.condition_type = ?::condition_type_enum
 				AND c.valid_from <= ? AND c.valid_to >= ?
 				""";
 

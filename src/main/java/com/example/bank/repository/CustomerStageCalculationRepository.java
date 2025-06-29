@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.Map;
 
 @Repository
 public class CustomerStageCalculationRepository {
@@ -28,7 +29,7 @@ public class CustomerStageCalculationRepository {
 				    total_balance, foreign_currency_balance, investment_trust_balance,
 				    monthly_foreign_currency_purchase, monthly_investment_trust_purchase,
 				    housing_loan_balance, monthly_fx_trading_volume
-				) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+				) VALUES (?, ?, ?, ?, ?::stage_code_enum, ?::stage_code_enum, ?, ?, ?, ?, ?, ?, ?)
 				""";
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -51,7 +52,8 @@ public class CustomerStageCalculationRepository {
 			return ps;
 		}, keyHolder);
 
-		return keyHolder.getKey().longValue();
+		Map<String, Object> keys = keyHolder.getKeys();
+		return ((Number) keys.get("id")).longValue();
 	}
 
 }

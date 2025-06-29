@@ -20,7 +20,7 @@ public class StageTransitionRepository {
 				INSERT INTO stage_transitions (
 				    customer_id, calculation_id, previous_stage_code,
 				    current_stage_code, transition_date
-				) VALUES (?, ?, ?, ?, ?)
+				) VALUES (?, ?, ?::stage_code_enum, ?::stage_code_enum, ?)
 				""";
 
 		jdbcTemplate.update(sql, result.customerId(), calculationId, result.currentStageCode(), result.finalStageCode(),

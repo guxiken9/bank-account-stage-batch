@@ -38,7 +38,7 @@ CREATE TABLE stage_conditions (
     max_value DECIMAL(15, 2) NOT NULL DEFAULT 9999999999999.99, -- Maximum value for condition
 
     -- Foreign key
-    CONSTRAINT fk_condition FOREIGN KEY (id) REFERENCES conditions(id)
+    CONSTRAINT fk_stage_condition FOREIGN KEY (id) REFERENCES conditions(id)
 );
 
 -- Create rank_change_conditions table
@@ -48,7 +48,7 @@ CREATE TABLE rank_change_conditions (
     rank_change_levels INT NOT NULL DEFAULT 1, -- Number of ranks to change when condition is met
 
     -- Foreign key
-    CONSTRAINT fk_condition FOREIGN KEY (id) REFERENCES conditions(id)
+    CONSTRAINT fk_rank_change_condition FOREIGN KEY (id) REFERENCES conditions(id)
 );
 
 -- Create customer_stage_calculations table
